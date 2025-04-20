@@ -1,3 +1,5 @@
+import { HttpRequest } from "../http-clients";
+
 export type Movie = {
   id: number;
   title: string;
@@ -99,8 +101,8 @@ export type MovieDetailResponse = {
 };
 
 export type MovieImagesResponse = {
-  backdrops: Image[];
   posters: Image[];
+  backdrops: Image[];
 };
 
 export type MovieVideosResponse = {
@@ -117,4 +119,25 @@ export type MovieReviewsResponse = {
   results: Review[];
   total_pages: number;
   total_results: number;
+};
+
+export type TMDBActionResponse = {
+  success: boolean;
+  status_code: number;
+  status_message: string;
+};
+
+export type MediaActionPayload = {
+  media_type: "movie";
+  media_id: number;
+  favorite?: boolean;
+  watchlist?: boolean;
+};
+
+export const postAccountMediaMovie = (
+  accountId: number,
+  type: "favorite" | "watchlist",
+  mediaData: MediaActionPayload
+) => {
+  return HttpRequest.post<TMDBActionResponse>(`/account/${accountId}/${type}`, mediaData);
 };

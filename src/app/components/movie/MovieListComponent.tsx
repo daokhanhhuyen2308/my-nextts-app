@@ -1,13 +1,17 @@
 import { useAppSelector } from "@/app/hooks/hooks";
 import { JSX } from "react";
 import MovieSection from "./MovieSection";
+import SearchResultMovies from "../search/SearchResultMovies";
 
 const MovieListComponent = (): JSX.Element => {
-  const popularMovies = useAppSelector((state) => state.movies.popularMovies);
-  const trendingMovies = useAppSelector((state) => state.movies.trendingMovies);
-  const topRatedMovies = useAppSelector((state) => state.movies.topRatedMovies);
-  const upcomingMovies = useAppSelector((state) => state.movies.upcomingMovies);
+  const { movieResults } = useAppSelector((state) => state.search);
 
+  const { popularMovies, trendingMovies, topRatedMovies, upcomingMovies } =
+    useAppSelector((state) => state.movies);
+
+  if(movieResults && movieResults.results.length > 0){
+    return <SearchResultMovies />
+  }  
 
   if (
     !popularMovies ||
@@ -25,10 +29,22 @@ const MovieListComponent = (): JSX.Element => {
 
   return (
     <>
-      <MovieSection title={"Popular Movies"} movieList={popularMovies.results} />
-      <MovieSection title={"Trending Movies"} movieList={trendingMovies.results} />
-      <MovieSection title={"Top Rated Movies"} movieList={topRatedMovies.results} />
-      <MovieSection title={"Upcoming Movies"} movieList={upcomingMovies.results} />
+      <MovieSection
+        title={"Popular Movies"}
+        movieList={popularMovies.results}
+      />
+      <MovieSection
+        title={"Trending Movies"}
+        movieList={trendingMovies.results}
+      />
+      <MovieSection
+        title={"Top Rated Movies"}
+        movieList={topRatedMovies.results}
+      />
+      <MovieSection
+        title={"Upcoming Movies"}
+        movieList={upcomingMovies.results}
+      />
     </>
   );
 };

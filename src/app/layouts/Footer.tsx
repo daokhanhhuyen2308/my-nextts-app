@@ -13,6 +13,8 @@ import {
   FooterContainer,
   FooterSection,
   MapContainer,
+  Nav,
+  NavLink,
   QRCodeContainer,
   SocialIcons,
 } from "../styles/layout/LayoutStyled";
@@ -23,20 +25,11 @@ const Footer = (): JSX.Element => {
     <FooterContainer>
       <FooterSection>
         <h3>About us</h3>
-        <ul>
-          <li>
-            <a href="#">Our story</a>
-          </li>
-          <li>
-            <a href="#">Team</a>
-          </li>
-          <li>
-            <a href="#">Recruitment</a>
-          </li>
-          <li>
-            <a href="#">Cetification</a>
-          </li>
-        </ul>
+        <Nav>
+          <NavLink href="/service">Service</NavLink>
+          <NavLink href="/contact">Contact</NavLink>
+          <NavLink href="/about">About</NavLink>
+        </Nav>
       </FooterSection>
       <ContactInfo>
         <h3>Contact us</h3>

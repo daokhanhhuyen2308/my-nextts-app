@@ -1,13 +1,6 @@
-import { searchMovies } from "@/app/services/movieService";
 import { MovieListResponse } from "@/app/types/movieDataTypes";
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-
-const fetchSearchMovies = createAsyncThunk(
-    "search/fetchSearchMovies",
-    async (query: string) => {
-        const response = await searchMovies(query);
-        return response;
-    });
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchSearchMovies } from "../movie/movieThunk";
 
 type SearchQueryState = {
     query: string;
@@ -23,7 +16,7 @@ const searchSlice = createSlice({
     name: "search",
     initialState,
     reducers: {
-        setSearchQuery: (state, action) => {
+        setSearchQuery: (state, action: PayloadAction<string>) => {
             state.query = action.payload;
         },
         clearSearchQuery: (state) => {

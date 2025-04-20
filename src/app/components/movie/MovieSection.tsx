@@ -1,5 +1,5 @@
 import { Movie } from "@/app/types/movieDataTypes";
-import MovieCard from "./MovieCard";
+import MovieCard from "@/app/components/movie/MovieCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { SectionTitle, SectionWrapper } from "@/app/styles/movie/MovieStyled";
@@ -36,7 +36,7 @@ const opts = {
   playerVars: {
     // https://developers.google.com/youtube/player_parameters
     autoplay: 1,
-    origin: "http://localhost:5173",
+    origin: "http://localhost:3000",
   },
 };
 
@@ -51,7 +51,7 @@ const MovieSection = (props: MovieSectionProps) => {
   const trailerData = useAppSelector((state) => state.movies.movieVideos);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [trailerKey, setTrailerKey] = useState<string | null>(null);
+  const [trailerKey, setTrailerKey] = useState<string | undefined>(undefined);
 
   const { navigateTo } = useRouterHandler();
 
@@ -72,16 +72,19 @@ const MovieSection = (props: MovieSectionProps) => {
   };
 
   useEffect(() => {
-    if (trailerData && trailerData.results.length > 0) {
+    const fetchDataTrailer = async () => {
+      if (!trailerData?.results.length) return;
+
       const trailer = trailerData.results.find(
         (video) => video.type === "Trailer" && video.site === "YouTube"
       );
+
       if (trailer) {
-        setTrailerKey(trailer?.key ?? null);
+        setTrailerKey(trailer?.key ?? trailerData.results[0].key);
       }
-    } else {
-      setTrailerKey(null);
-    }
+    };
+
+    fetchDataTrailer();
   }, [trailerData]);
 
   return (
@@ -100,14 +103,16 @@ const MovieSection = (props: MovieSectionProps) => {
         transitionDuration={500}
         className="flex items-center space-x-4"
       >
-        {movieList.map((movie: Movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            handleTrailerClick={handleTrailerClick}
-            handleWatchClick={() => handleWatchClick(movie)}
-          />
-        ))}
+        <div style={{ display: "flex", gap: "5px" }}>
+          {movieList.map((movie: Movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              handleTrailerClick={handleTrailerClick}
+              handleWatchClick={handleWatchClick}
+            />
+          ))}
+        </div>
       </Carousel>
       <Modal
         isOpen={modalIsOpen}
@@ -128,11 +133,7 @@ const MovieSection = (props: MovieSectionProps) => {
         }}
         contentLabel="Example Modal"
       >
-        <YouTube
-          videoId={trailerKey || undefined}
-          opts={opts}
-          onReady={onReady}
-        />
+        <YouTube videoId={trailerKey} opts={opts} onReady={onReady} />
       </Modal>
     </SectionWrapper>
   );

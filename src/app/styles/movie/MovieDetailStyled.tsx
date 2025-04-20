@@ -99,3 +99,38 @@ export const ActorName = styled.p`
   margin-top: 0.5rem;
   font-size: 0.9rem;
 `;
+
+//review
+export const ReviewContainer = styled.div`
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  color: #fff;
+`;
+
+export const ReviewItem = styled.div`
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+export const Author = styled.p`
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff
+`;
+
+export const Content = styled.p`
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  color: #ddd;
+`;
+
+export const NoReview = styled.p`
+  font-size: 1rem;
+  color: #aaa;
+  text-align: center;
+  padding: 2rem 0;
+`;

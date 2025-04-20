@@ -10,9 +10,25 @@ import {
   fetchMovieReviews,
   fetchMovieTrailer,
 } from "@/app/redux/movie/movieThunk";
-import { Actor, ActorImage, ActorName, Backdrop, CastList, ContentOverlay, InfoSection, Overview, Section, SectionTitle, Title, Trailer, TrailerWrapper } from "@/app/styles/movie/MovieDetailStyled";
-import MovieSection from "./MovieSection";
-
+import {
+  Actor,
+  ActorImage,
+  ActorName,
+  Backdrop,
+  CastList,
+  ContentOverlay,
+  InfoSection,
+  Overview,
+  Section,
+  SectionTitle,
+  Title,
+  Trailer,
+  TrailerWrapper,
+} from "@/app/styles/movie/MovieDetailStyled";
+import MovieSection from "@/app/components/movie/MovieSection";
+import MovieReview from "@/app/components/movie/MovieReview";
+import PosterComponent from "@/app/components/images/PosterComponent";
+import { HeartIcon } from "@/app/styles/layout/LayoutStyled";
 
 type MovieIdProps = {
   movieId: number;
@@ -23,6 +39,7 @@ const MovieDetail = ({ movieId }: MovieIdProps) => {
   const movie = useAppSelector((state) => state.movies.movieDetails);
   const credits = useAppSelector((state) => state.movies.movieCredits);
   const reviews = useAppSelector((state) => state.movies.movieReviews);
+  const images = useAppSelector((state) => state.movies.movieImages);
   const recommendations = useAppSelector(
     (state) => state.movies.movieRecommendations
   );
@@ -35,6 +52,7 @@ const MovieDetail = ({ movieId }: MovieIdProps) => {
       dispatch(fetchMovieReviews(movieId));
       dispatch(fetchMovieRecommendations(movieId));
       dispatch(fetchMovieTrailer(movieId));
+      dispatch(fetchMovieImages(movieId));
     }
   }, [movieId, dispatch]);
 
@@ -57,6 +75,7 @@ const MovieDetail = ({ movieId }: MovieIdProps) => {
         </ContentOverlay>
       </Backdrop>
 
+        <HeartIcon />
       {trailer && (
         <TrailerWrapper>
           <Trailer
@@ -80,9 +99,23 @@ const MovieDetail = ({ movieId }: MovieIdProps) => {
             </Actor>
           ))}
         </CastList>
+        <Section>
+          <SectionTitle>Posters</SectionTitle>
+          {images?.posters && images.posters.length > 0 && (
+            <PosterComponent posters={images.posters} />
+          )}
+        </Section>
       </Section>
       <Section>
-        <MovieSection title={"Recommended Movies"} movieList={recommendations?.results || []} />
+        <MovieSection
+          title={"Recommended Movies"}
+          movieList={recommendations?.results || []}
+        />
+      </Section>
+
+      <Section>
+        <SectionTitle>Reviews</SectionTitle>
+        <MovieReview reviews={reviews?.results ?? []} />
       </Section>
     </>
   );

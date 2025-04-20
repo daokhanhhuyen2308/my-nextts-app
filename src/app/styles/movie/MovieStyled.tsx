@@ -14,8 +14,8 @@ export const SectionTitle = styled.h2`
 export const CardWrapper = styled.div`
   position: relative;
   flex: 0 0 auto;
-  width: 180px;
-  height: 270px;
+  width: 165px;
+  height: 250px;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -138,5 +138,30 @@ export const WatchButton = styled.button`
 
   &:hover {
     background-color: #dc2626;
+  }
+`;
+
+
+export const FavoriteButton = styled.button<{ isFavorite?: boolean }>`
+  margin-top: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: ${(props) => (props.isFavorite ? "#ef4444" : "#fff")};
+  transition: color 0.3s ease;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+
+  &:hover {
+    color: #ef4444;
+  }
+
+  svg {
+    font-size: 18px;
   }
 `;

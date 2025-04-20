@@ -73,7 +73,7 @@ const LoginButton = styled.button`
   }
 `;
 
-const WishlistIcon = styled(FaHeart)`
+const HeartIcon = styled(FaHeart)`
   color: white;
   font-size: 35px;
   cursor: pointer;
@@ -87,7 +87,7 @@ const WishlistIcon = styled(FaHeart)`
   }
 `;
 
-export {LayoutContainer, HeaderWrapper, Nav, NavLink, LoginButton, WishlistIcon };
+export {LayoutContainer, HeaderWrapper, Nav, NavLink, LoginButton, HeartIcon };
 
 export const MainContent = styled.main`
   flex: 1;`;
