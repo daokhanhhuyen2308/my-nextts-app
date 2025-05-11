@@ -16,12 +16,12 @@ const responseBody = <T>(response: AxiosResponse<T>) => {
 const apiRequest = {
   get: <T>(url: string, config?: AxiosRequestConfig) =>
     httpClients.get<T>(url, config).then(responseBody),
-  post: async <T>(url: string, body: unknown, config?: AxiosRequestConfig) =>
+  post: async <T>(url: string, body: object, config?: AxiosRequestConfig) =>
     httpClients.post<T>(url, body, config).then(responseBody),
-  put: async <T>(url: string, body: unknown, config?: AxiosRequestConfig) =>
+  put: async <T>(url: string, body: object, config?: AxiosRequestConfig) =>
     httpClients.put<T>(url, body, config).then(responseBody),
-  delete: async <T>(url: string, body?: unknown, config?: AxiosRequestConfig) =>
-    httpClients.delete<T>(url, body, config).then(responseBody),
+  delete: async <T>(url: string, config?: AxiosRequestConfig) =>
+    httpClients.delete<T>(url, config).then(responseBody),
 };
 
 export const HttpRequest = {

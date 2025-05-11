@@ -1,15 +1,12 @@
-import { httpClients, HttpRequest } from "../http-clients";
+import { HttpRequest } from "../../http-clients";
 import {
-  Movie,
   MovieCreditsResponse,
   MovieDetailResponse,
   MovieImagesResponse,
   MovieListResponse,
   MovieReviewsResponse,
   MovieVideosResponse,
-  postAccountMediaMovie,
-  TMDBActionResponse,
-} from "../types/movieDataTypes";
+} from "../../types/movieDataTypes";
 
 // Lấy danh sách phim phổ biến
 export const getPopularMovies = (
@@ -25,19 +22,24 @@ export const getPopularMovies = (
 };
 
 // Lấy danh sách phim thịnh hành (trending)
-export const getTrendingMovies = () => {
+export const getTrendingMovies = (
+  page: number = 1,
+) => {
   return HttpRequest.get<MovieListResponse>("/trending/movie/day", {
     params: {
+      page: page,
       language: "en-US",
     },
   });
 };
 
 // Lấy danh sách phim được đánh giá cao (Top Rated)
-export const getTopRatedMovies = () => {
+export const getTopRatedMovies = (
+  page: number = 1,
+) => {
   return HttpRequest.get<MovieListResponse>("/movie/top_rated", {
     params: {
-      page: 1,
+      page: page,
       language: "en-US",
     },
   });
@@ -101,56 +103,3 @@ export const searchMovies = (
     },
   });
 };
-
-export const addMovieToWatchlist = (accountId: number, movieId: number) => {
-  return postAccountMediaMovie(accountId, "watchlist", {
-    media_type: "movie",
-    media_id: movieId,
-    watchlist: true
-  })
-}
-
-export const removeMovieFromWatchlist = (accountId: number, movieId: number) => {
-  return postAccountMediaMovie(accountId, "watchlist", {
-    media_type: "movie",
-    media_id: movieId,
-    watchlist: false
-
-  })
-}
-
-export const getMovieWatchlist = (accountId: number, page: number = 1, language: string = "en-US") => {
-  return HttpRequest.get<MovieListResponse>(`/account/${accountId}/watchlist/movies`, {
-    params: {
-      media_type: "movie",
-      page: page,
-      language: language
-    },
-  });
-}
-
-export const removeMovieFavorite = (accountId: number, movieId: number) => {
-  return postAccountMediaMovie(accountId, "favorite", {
-      media_type: "movie",
-      media_id: movieId,
-      favorite: false,
-    });
-}
-
-//fetch('https://api.themoviedb.org/3/account/21943205/favorite/movies?language=en-US&page=1&sort_by=created_at.asc', options)
-export const getMovieFavorite = (accountId: number, page: number = 1, language: string = "en-US") => {
-  return HttpRequest.get<MovieListResponse>(`/account/${accountId}/favorite/movies`, {
-    params: {
-      page: page,
-      language: language
-    }
-  });
-}
-
-export const addMovieToFavorite = (accountId: number, movieId: number) => {
-  return postAccountMediaMovie(accountId, "favorite", {
-    media_type: "movie",
-    media_id: movieId,
-    favorite: true,
-  });
-}

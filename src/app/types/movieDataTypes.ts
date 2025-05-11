@@ -1,4 +1,3 @@
-import { HttpRequest } from "../http-clients";
 
 export type Movie = {
   id: number;
@@ -121,23 +120,7 @@ export type MovieReviewsResponse = {
   total_results: number;
 };
 
-export type TMDBActionResponse = {
-  success: boolean;
-  status_code: number;
-  status_message: string;
-};
-
-export type MediaActionPayload = {
-  media_type: "movie";
-  media_id: number;
-  favorite?: boolean;
-  watchlist?: boolean;
-};
-
-export const postAccountMediaMovie = (
-  accountId: number,
-  type: "favorite" | "watchlist",
-  mediaData: MediaActionPayload
-) => {
-  return HttpRequest.post<TMDBActionResponse>(`/account/${accountId}/${type}`, mediaData);
-};
+export type BriefMovie = Pick<
+  Movie,
+  "id" | "title" | "poster_path" | "vote_average" | "release_date"
+>;

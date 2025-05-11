@@ -48,6 +48,20 @@ const NavLink = styled(Link)`
   }
 `;
 
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+const Username = styled.span`
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+`;
+
 const LoginButton = styled.button`
   background-color: #007bff;
   color: #fff;
@@ -188,5 +202,5 @@ export {
   ContactInfo,
   SocialIcons,
   QRCodeContainer,
-  MapContainer,
+  MapContainer, Avatar, Username,
 };

@@ -19,30 +19,22 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../lib/firebase/firebase";
 
 const initialValues: RegisterValueProps = {
-  username: "",
+  // username: "",
   email: "",
   password: "",
-  confirmPassword: "",
-  gender: "female",
-  phone: "",
+  // confirmPassword: "",
+  // phone: "",
 };
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
+  // username: yup.string().required("Username is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password")], "Passwords must match")
-    .required("Confirm Password is required"),
-  gender: yup
-    .string()
-    .oneOf(
-      ["female", "male", "other"],
-      "Gender must be either 'female' or 'male'"
-    )
-    .required("Gender is required"),
-  phone: yup.string().required("Phone number is required"),
+  // confirmPassword: yup
+  //   .string()
+  //   .oneOf([yup.ref("password")], "Passwords must match")
+  //   .required("Confirm Password is required"),
+  // phone: yup.string().required("Phone number is required"),
 });
 
 const RegisterComponent = (): JSX.Element => {
@@ -84,14 +76,14 @@ const RegisterComponent = (): JSX.Element => {
     <FormStyledContainer>
       <FormStyledTitle>Register</FormStyledTitle>
       <FormStyledForm onSubmit={handleSubmit(onSubmit)}>
-        <InputCommon
+        {/* <InputCommon
           id="username"
           lable="Username"
           name="username"
           placeholder="Enter your username"
           register={register}
           errorMsg={errors.username?.message}
-        />
+        /> */}
         <InputCommon
           id="email"
           lable="Email"
@@ -110,7 +102,7 @@ const RegisterComponent = (): JSX.Element => {
           register={register}
           errorMsg={errors.password?.message}
         />
-        <InputCommon
+        {/* <InputCommon
           id="confirmPassword"
           lable="Confirm Password"
           name="confirmPassword"
@@ -118,23 +110,15 @@ const RegisterComponent = (): JSX.Element => {
           placeholder="Confirm your password"
           register={register}
           errorMsg={errors.confirmPassword?.message}
-        />
-        <InputCommon
-          id="gender"
-          lable="Gender"
-          name="gender"
-          placeholder="Enter your gender"
-          register={register}
-          errorMsg={errors.gender?.message}
-        />
-        <InputCommon
+        /> */}
+        {/* <InputCommon
           id="phone"
           lable="Phone"
           name="phone"
           placeholder="Enter your phone number"
           register={register}
           errorMsg={errors.phone?.message}
-        />
+        /> */}
         <FormStyledButton type="submit">Register</FormStyledButton>
         <FormStyledNavigate onClick={() => navigateTo("/login")}>
           Already have an account? Login

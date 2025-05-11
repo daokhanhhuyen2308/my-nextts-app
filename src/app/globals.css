@@ -11,3 +11,7 @@ body{
     background-color: #141414;
     backdrop-filter: blur(10px);
 }
+
+.carousel-item-class {
+    min-width: 0 !important;
+  }

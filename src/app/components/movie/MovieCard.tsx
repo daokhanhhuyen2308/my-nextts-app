@@ -1,9 +1,6 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks/hooks";
-import {
-  fetchAddMovieToFavorite,
-  fetchMovieFavorite,
-  fetchRemoveMovieFromFavorite,
-} from "@/app/redux/movie/movieThunk";
+import { useAppSelector } from "@/app/hooks/hooks";
+import useFavouriteMovieMutation from "@/app/hooks/useFavoriteMutation";
+
 import {
   CardWrapper,
   FavoriteButton,
@@ -14,14 +11,15 @@ import {
   Rating,
   WatchButton,
 } from "@/app/styles/movie/MovieStyled";
-import { Movie } from "@/app/types/movieDataTypes";
+import { BriefMovie, Movie } from "@/app/types/movieDataTypes";
+import { useState } from "react";
 import { FaHeart, FaPlay, FaStar, FaTv } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 type MovieValueProps = {
-  movie: Movie;
+  movie: Movie | BriefMovie;
   handleTrailerClick: (id: number) => void;
-  handleWatchClick: (movie: Movie) => void;
+  handleWatchClick: (movie: Movie | BriefMovie) => void;
 };
 
 const MovieCard = ({
@@ -29,42 +27,51 @@ const MovieCard = ({
   handleTrailerClick,
   handleWatchClick,
 }: MovieValueProps) => {
-  const dispatch = useAppDispatch();
-  const accountId = 21943205;
+  const { id, poster_path, title, vote_average } = movie;
 
-  const isFavorite = useAppSelector((state) =>
-    state.movies.movieFavorite?.results.some(
-      (item: Movie) => item.id === movie.id
-    )
-  );
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  const accountId = useAppSelector((state) => state.auth.user?.uid);
+  //call custome hook that you craeted with react-query
+  const { addMovieFavoriteMutation, removeMovieFavoriteMutation } =
+    useFavouriteMovieMutation(accountId || "");
 
   const toggleFavorite = () => {
-    if (!isFavorite) {
-      dispatch(fetchAddMovieToFavorite({ accountId, movie }));
-      toast.success("Thêm thành công vào danh sách yêu thích");
+    if (!accountId) {
+      toast.error("Vui lòng đăng nhập để thêm vào danh sách yêu thích");
+      return;
+    }
+    if (isFavorite) {
+      removeMovieFavoriteMutation.mutate(id, {
+        onSuccess: () => {
+          toast.success("Đã xóa khỏi danh sách yêu thích");
+          setIsFavorite(false);
+        },
+      });
     } else {
-      dispatch(fetchRemoveMovieFromFavorite({ accountId, movie }));
-      toast.success("Xóa khỏi danh sách yêu thích phim");
+      addMovieFavoriteMutation.mutate(movie, {
+        onSuccess: () => {
+          toast.success("Đã thêm vào danh sách yêu thích");
+          setIsFavorite(true);
+        },
+      });
     }
   };
 
   return (
     <CardWrapper>
       <PosterImage
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
+        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+        alt={title}
       />
-      <PlayIcon
-        className="play-icon"
-        onClick={() => handleTrailerClick(movie.id)}
-      >
+      <PlayIcon className="play-icon" onClick={() => handleTrailerClick(id)}>
         <FaPlay />
       </PlayIcon>
       <Overlay>
-        <MovieTitle>{movie.title}</MovieTitle>
+        <MovieTitle>{title}</MovieTitle>
         <Rating>
           <FaStar className="star-icon" />
-          {movie.vote_average.toFixed(1)}
+          {vote_average.toFixed(1)}
         </Rating>
         <div
           style={{

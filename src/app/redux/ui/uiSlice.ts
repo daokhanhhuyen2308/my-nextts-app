@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 interface UiState {
   showLogin: boolean;
   showWishlist: boolean;
@@ -21,11 +20,8 @@ const uiSlice = createSlice({
         closeLoginForm(state) {
         state.showLogin = false;
         },
-        showWishlist(state) {
-        state.showWishlist = true;
-        }
     },
 })
 
-export const { showLoginForm, closeLoginForm, showWishlist } = uiSlice.actions;
+export const { showLoginForm, closeLoginForm } = uiSlice.actions;
 export default uiSlice.reducer;

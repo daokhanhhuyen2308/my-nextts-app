@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import uiReducer from './ui/uiSlice'
 import movieReducer from './movie/movieSlice'
 import searchReducer from './search/searchSlice'
+import authReducer from './auth/authSlice'
 
 export const store = configureStore({
   reducer: {
     ui: uiReducer,
     movies: movieReducer,
     search: searchReducer,
+    auth: authReducer,
   },
 })
 

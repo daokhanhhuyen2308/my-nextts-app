@@ -64,7 +64,6 @@ const LoginComponent = (): JSX.Element => {
       }
     } catch (error: any) {
       toast.error("Oops! Something went wrong");
-      throw Error("Error: ", error);
     }
   };
 
@@ -78,7 +77,6 @@ const LoginComponent = (): JSX.Element => {
       }
     } catch (error: any) {
       toast.error("Oops! Something went wrong");
-      throw Error("Error: ", error);
     }
   };
 
@@ -123,7 +121,7 @@ const LoginComponent = (): JSX.Element => {
       </FormStyledForm>
     </FormStyledContainer>
   );
-};
+};                                 
 
 export default LoginComponent;
 

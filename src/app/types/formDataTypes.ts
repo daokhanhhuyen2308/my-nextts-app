@@ -17,10 +17,9 @@ export type ConfirmationResultValueProps = {
 }
 
 export type RegisterValueProps = {
-  username: string;
+  // username: string;
   email: string;
   password: string;
-  confirmPassword: string;
-  gender: "female" | "male" | "other";
-  phone: string;
+  // confirmPassword: string;
+  // phone: string;
 };

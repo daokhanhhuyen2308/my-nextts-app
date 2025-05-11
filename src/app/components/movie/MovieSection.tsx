@@ -101,18 +101,16 @@ const MovieSection = (props: MovieSectionProps) => {
         swipeable
         customTransition="transform 500ms ease-in-out"
         transitionDuration={500}
-        className="flex items-center space-x-4"
+        itemClass="carousel-item-class"
       >
-        <div style={{ display: "flex", gap: "5px" }}>
-          {movieList.map((movie: Movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              handleTrailerClick={handleTrailerClick}
-              handleWatchClick={handleWatchClick}
-            />
-          ))}
-        </div>
+        {movieList.map((movie: Movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            handleTrailerClick={handleTrailerClick}
+            handleWatchClick={handleWatchClick}
+          />
+        ))}
       </Carousel>
       <Modal
         isOpen={modalIsOpen}

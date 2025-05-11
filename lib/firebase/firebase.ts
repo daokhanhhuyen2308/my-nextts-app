@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, RecaptchaVerifier } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -13,14 +14,14 @@ const firebaseConfig = {
   projectId: "daokhanhhuyen-801f2",
   storageBucket: "daokhanhhuyen-801f2.firebasestorage.app",
   messagingSenderId: "171395942772",
-  appId: "1:171395942772:web:edb07681ec008c52568421",
-  measurementId: "G-T74FBJ9F5M",
+  appId: "1:171395942772:web:f6d25e36f583a729568421",
+  measurementId: "G-VH8BDQZJHM"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const auth = getAuth(app);
+const firestore = getFirestore(app);
 
-export { auth, analytics };
+export {auth, firestore};

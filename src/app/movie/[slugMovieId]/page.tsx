@@ -9,7 +9,7 @@ type MovieIdProps = {
   };
 };
 
-export default function MovieDetailPage({ params }: MovieIdProps) {
-  const id = Number(params.slugMovieId.split(".").pop());
+export default function MovieDetailPage({ params: {slugMovieId} }: MovieIdProps) {
+  const id = Number(slugMovieId.split(".").pop());
   return <MovieDetail movieId={id} />;
 }

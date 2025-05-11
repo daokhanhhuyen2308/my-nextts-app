@@ -2,6 +2,7 @@ import { useAppSelector } from "@/app/hooks/hooks";
 import { JSX } from "react";
 import MovieSection from "./MovieSection";
 import SearchResultMovies from "../search/SearchResultMovies";
+import LoadingCommon from "@/app/common/LoadingCommon";
 
 const MovieListComponent = (): JSX.Element => {
   const { movieResults } = useAppSelector((state) => state.search);
@@ -19,11 +20,7 @@ const MovieListComponent = (): JSX.Element => {
     popularMovies.results.length === 0
   ) {
     return (
-      <div>
-        <h3 style={{ color: "#fff", padding: "20px", textAlign: "center" }}>
-          Loading...
-        </h3>
-      </div>
+      <LoadingCommon/>
     );
   }
 
